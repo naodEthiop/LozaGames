@@ -1,0 +1,37 @@
+{
+  "name": "Color Move Kids - Educational Game",
+  "short_name": "Color Move",
+  "description": "A fun educational kids' game where children learn colors and actions through interactive videos",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#a78bfa",
+  "theme_color": "#a78bfa",
+  "orientation": "landscape",
+  "categories": ["education", "games", "kids"],
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-1.png",
+      "sizes": "1920x1080",
+      "type": "image/png"
+    }
+  ]
+}
