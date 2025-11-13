@@ -29,6 +29,12 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
+# Ensure Google verification file is accessible
+[[redirects]]
+  from = "/googleb1eecd1bf79bb728.html"
+  to = "/googleb1eecd1bf79bb728.html"
+  status = 200
+
 # Security headers for HTML files
 [[headers]]
   for = "/*.html"
