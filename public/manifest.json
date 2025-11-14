@@ -1,0 +1,22 @@
+{
+  "name": "Loza Games",
+  "short_name": "LozaGames",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#00aa55",
+  "description": "Kids color–action game with videos and timers",
+  "icons": [
+    {
+      "src": "/icon/web-app-manifest-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon/web-app-manifest-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

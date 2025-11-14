@@ -1,43 +1,80 @@
 [build]
-  # No build command needed for static site
   command = ""
-  # Publish the root directory containing index.html
   publish = "."
 
-# Environment variables
 [build.environment]
-  NODE_VERSION = "18"  # Updated to a more recent LTS version
+  NODE_VERSION = "18"
+  NODE_ENV = "production"
 
-# Redirect all requests to index.html for SPA routing
+# SPA Routing - Handle client-side routing
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+  force = false
 
-# Custom headers
+# Security Headers (applied to all routes)
 [[headers]]
   for = "/*"
   [headers.values]
+    # Security headers
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     X-XSS-Protection = "1; mode=block"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    
-# Cache control for static assets
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+    Content-Security-Policy = """
+      default-src 'self';
+      script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com;
+      style-src 'self' 'unsafe-inline';
+      img-src 'self' data: https:;
+      font-src 'self' data:;
+      connect-src 'self' https: https://www.google-analytics.com;
+      media-src 'self' https:;
+      frame-src 'self' https://www.youtube-nocookie.com;
+      object-src 'none';
+      base-uri 'self';
+      form-action 'self';
+    """
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+
+# Service Worker Configuration
+[[headers]]
+  for = "/service-worker.js"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate, max-age=0"
+    Service-Worker-Allowed = "/"
+
+# Cache Control - Static Assets
 [[headers]]
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+    Vary = "Accept-Encoding"
 
-# Ensure Google verification file is accessible
+# Cache Control - Icons and Favicons
+[[headers]]
+  for = "/icon/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Access-Control-Allow-Origin = "*"
+
+# Cache Control - Videos
+[[headers]]
+  for = "/videos/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"  # 30 days
+    Access-Control-Allow-Origin = "*"
+
+# Cache Control - HTML Files
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, must-revalidate"
+
+# Google Verification File
 [[redirects]]
   from = "/googleb1eecd1bf79bb728.html"
   to = "/googleb1eecd1bf79bb728.html"
   status = 200
-
-# Security headers for HTML files
-[[headers]]
-  for = "/*.html"
-  [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate"
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https:; frame-ancestors 'none'; form-action 'self'; base-uri 'self';"
+  force = true
