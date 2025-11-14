@@ -63,8 +63,33 @@
 [[headers]]
   for = "/videos/*"
   [headers.values]
-    Cache-Control = "public, max-age=2592000"  # 30 days
+    Cache-Control = "public, max-age=604800"  # 7 days
     Access-Control-Allow-Origin = "*"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    
+# Disable caching for HTML files to prevent freezing
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Pragma = "no-cache"
+    Expires = "0"
+
+# Exception for static assets that can be cached
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Vary = "Accept-Encoding"
+
+# Exception for service worker (must not be cached)
+[[headers]]
+  for = "/service-worker.js"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate, max-age=0"
+    Service-Worker-Allowed = "/"
 
 # Cache Control - HTML Files
 [[headers]]
